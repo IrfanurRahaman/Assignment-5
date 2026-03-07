@@ -14,10 +14,34 @@ function showdata(issues){
         console.log(issue)
         const card = document.createElement('div');
 
+        const labelsHTML = issue.labels.map(label => {
+            // default color
+            let bgClass = "bg-gray-200 text-gray-600";
+
+            if(label.toLowerCase() === "bug") {
+                bgClass = "bg-red-200 text-red-600";
+            } else if(label.toLowerCase() === "help wanted") {
+                bgClass = "bg-yellow-200 text-yellow-600";
+            } else if(label.toLowerCase() === "enhancement") {
+                bgClass = "bg-green-200 text-green-600";
+            }
+
+            return `<p class="rounded-full text-[12px] px-4 ${bgClass}">${label}</p>`;
+        }).join("");
+
         card.innerHTML = `
                 <div class=" h-full shadow-sm p-4 rounded-md border-t-4 border-[#00A96E]">
                     <div class="flex justify-between mb-3">
-                        <img src="assets/Open-Status.png" alt="">
+                    
+                        <img src="${
+                        issue.priority === 'high' 
+                        ? 'assets/Open-Status.png' 
+                        : issue.priority === 'medium' 
+                        ? 'assets/Open-Status.png'
+                        : 'assets/close.png'}" 
+                        alt="">
+
+
                         <p class="${issue.priority === 'high'? 'text-red-500 bg-red-200 rounded-full px-4': issue.priority === 'medium'? 'text-yellow-500 bg-yellow-100 rounded-full px-4': 'text-gray-500 bg-gray-200 rounded-full px-4'}">
                         ${issue.priority}
                         </p>
@@ -28,8 +52,7 @@ function showdata(issues){
                         <p class="text-neutral-500 text-[12px]">${issue.description}</p>
 
                         <div class="flex justify-between border-b border-neutral-300 pb-4">
-                            <p class="bg-red-200 rounded-full text-red-500 text-[12px] px-4">BUG</p>
-                            <p class="bg-yellow-200 rounded-full text-yellow-600 text-[12px] px-4">HELP WANTED</p>
+                            ${labelsHTML} 
                         </div>
                     </div>
 
