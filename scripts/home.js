@@ -14,15 +14,29 @@ function btnToggle(id){
 
             // API data getting function
 
+let allIssues = [];
+
+function getAllData(){
+    showdata(allIssues);
+}
+
+
+
 function getdata(){
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
     .then((Response) => Response.json())
-    .then((data) => showdata(data.data))
+    .then((data) => {
+        allIssues = data.data;
+        showdata(allIssues);
+    })
+
 }
 
 function showdata(issues){
     const cardContainer = document.getElementById('card-container');
     cardContainer.innerHTML = "";
+
+
 
     issues.forEach((issue) =>{
         const card = document.createElement('div');
@@ -43,14 +57,12 @@ function showdata(issues){
         }).join("");
 
         card.innerHTML = `
-                <div class=" h-full shadow-sm p-4 rounded-md border-t-4 border-[#00A96E]">
+                <div class=" h-full shadow-sm p-4 rounded-md border-t-4 border-[${issue.status == 'open'? '#00A96E' : '#A855F7'}]">
                     <div class="flex justify-between mb-3">
                     
                         <img src="${
-                        issue.priority === 'high' 
+                        issue.status === 'open' 
                         ? 'assets/Open-Status.png' 
-                        : issue.priority === 'medium' 
-                        ? 'assets/Open-Status.png'
                         : 'assets/close.png'}" 
                         alt="">
 
@@ -77,7 +89,21 @@ function showdata(issues){
         `;
 
         cardContainer.appendChild(card)
+
+        const issueCount = document.getElementById('issue-count');
+        issueCount.innerText = issues.length;    
     }) 
 }
 
 getdata()         
+
+
+function getOpenData(){
+    const openIssues = allIssues.filter(issue => issue.status === "open");
+    showdata(openIssues);
+}
+
+function getCloseData(){
+    const closedIssues = allIssues.filter(issue => issue.status === "closed");
+    showdata(closedIssues);
+}
