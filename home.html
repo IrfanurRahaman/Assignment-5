@@ -29,12 +29,13 @@
 </head>
 
 <body class="bg-[#F8FAFC]">
-    <header class="navbar bg-base-100 shadow-sm">
-        <div class="w-11/12 m-auto flex">
-            <div class="flex-1">
+    <header class="navbar bg-base-100 shadow-sm sticky top-0 z-20">
+        <div class="w-11/12 m-auto space-y-4 sm:flex  sm:items-center">
+            <div class="flex-1 mt-2">
                 <a class="btn btn-ghost text-xl"><img class="w-9" src="assets/github-logo.png" alt="">GitHub Issues Tracker</a>
             </div>
-            <div class="flex gap-2">
+
+            <div class="flex gap-2 justify-center">
                 <input type="text"  placeholder="Search Issues..." class="input input-bordered w-24 md:w-auto" />
                 
                 <div>
@@ -46,22 +47,22 @@
 
                 <!-- main seciton -->
 
-    <main class="w-[1110px] m-auto mt-[60px]">
+    <main class="max-w-[1110px] m-auto mt-8 sm:mt-14">
 
                 <!-- buttons section -->
 
-        <section class="shadow-sm p-6 mb-4 bg-white rounded-lg">
-            <button id="all-btn" onclick="btnToggle('all-btn'); getAllData()" class="btn btn-primary w-[120px]">All</button>
+        <section class="shadow-sm p-6 mb-4 bg-white rounded-lg space-x-2">
+            <button id="all-btn" onclick="btnToggle('all-btn'); getAllData()" class="btn btn-primary w-[80px] sm:w-[120px]">All</button>
 
-            <button id="open-btn" onclick="btnToggle('open-btn'); getOpenData()" class="btn  w-[120px]">Open</button>
+            <button id="open-btn" onclick="btnToggle('open-btn'); getOpenData()" class="btn w-[80px] sm:w-[120px]">Open</button>
 
-            <button id="closed-btn" onclick="btnToggle('closed-btn'); getCloseData()" class="btn  w-[120px]">Closed</button>
+            <button id="closed-btn" onclick="btnToggle('closed-btn'); getCloseData()" class="btn w-[80px] sm:w-[120px]">Closed</button>
         </section>
 
                 <!-- issues count section -->
 
         <section class="flex justify-between p-6 shadow-sm bg-white rounded-lg border-b border-gray-200">
-            <div class="flex gap-2">
+            <div class="sm:flex gap-2">
                 <img class="w-12 h-12" src="assets/Aperture.png" alt="">
 
                 <div>
@@ -86,7 +87,7 @@
                 <!-- card container section -->
 
         <section  class="shadow-sm p-6 bg-white rounded-lg ">
-            <div id="card-container" class="grid grid-cols-4 gap-3">
+            <div id="card-container" class="grid-cols-1 space-y-2 sm:grid sm:grid-cols-4 gap-3">
                 <!-- <div class="h-full shadow-sm p-4 rounded-md border-t-4 border-[#00A96E]">
                     <div class="flex justify-between mb-3">
                         <img src="assets/Open-Status.png" alt="">
