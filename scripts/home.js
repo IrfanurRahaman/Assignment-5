@@ -1,4 +1,18 @@
+function btnToggle(id){
+    const allBtn = document.getElementById('all-btn');
+    const openBtn = document.getElementById('open-btn');
+    const closedBtn = document.getElementById('closed-btn');
 
+    allBtn.classList.remove('btn-primary')
+    openBtn.classList.remove('btn-primary')
+    closedBtn.classList.remove('btn-primary')
+
+    const selected = document.getElementById(id);
+    selected.classList.add('btn-primary');
+}
+
+
+            // API data getting function
 
 function getdata(){
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
@@ -11,7 +25,6 @@ function showdata(issues){
     cardContainer.innerHTML = "";
 
     issues.forEach((issue) =>{
-        console.log(issue)
         const card = document.createElement('div');
 
         const labelsHTML = issue.labels.map(label => {

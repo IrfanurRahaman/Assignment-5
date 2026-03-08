@@ -51,11 +51,11 @@
                 <!-- buttons section -->
 
         <section class="shadow-sm p-6 mb-4 bg-white rounded-lg">
-            <button class="btn btn-primary w-[120px]">All</button>
+            <button id="all-btn" onclick="btnToggle('all-btn')" class="btn btn-primary w-[120px]">All</button>
 
-            <button class="btn btn-primary w-[120px]">Open</button>
+            <button id="open-btn" onclick="btnToggle('open-btn')" class="btn  w-[120px]">Open</button>
 
-            <button class="btn btn-primary w-[120px]">Closed</button>
+            <button id="closed-btn" onclick="btnToggle('closed-btn')" class="btn  w-[120px]">Closed</button>
         </section>
 
                 <!-- issues count section -->
@@ -109,7 +109,8 @@
                     </div>
                 </div> -->
             </div>
-        </section>        
+        </section>
+
     </main>     
     
     <script src="scripts/home.js"></script>
