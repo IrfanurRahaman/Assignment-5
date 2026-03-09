@@ -57,7 +57,7 @@ function showdata(issues){
         }).join("");
 
         card.innerHTML = `
-                <div class=" h-full shadow-sm p-4 rounded-md border-t-4 border-[${issue.status == 'open'? '#00A96E' : '#A855F7'}]">
+                <div onclick="getModal('${issue.id}')"  class=" h-full shadow-sm p-4 rounded-md border-t-4 border-[${issue.status == 'open'? '#00A96E' : '#A855F7'}]">
                     <div class="flex justify-between mb-3">
                     
                         <img src="${
@@ -97,13 +97,95 @@ function showdata(issues){
 
 getdata()         
 
-
+            // opned data getting function
 function getOpenData(){
     const openIssues = allIssues.filter(issue => issue.status === "open");
     showdata(openIssues);
 }
 
+            // closed data getting function
 function getCloseData(){
     const closedIssues = allIssues.filter(issue => issue.status === "closed");
     showdata(closedIssues);
 }
+
+
+
+
+
+
+
+
+
+function labelItems(labels){
+    return labels.map(label => {
+
+        let labelClass = "border-gray-300 text-gray-600";
+
+        if(label.toLowerCase() === "bug"){
+            labelClass = "border-red-400 text-red-500";
+        }
+        else if(label.toLowerCase() === "help wanted"){
+            labelClass = "border-yellow-400 text-yellow-600";
+        }
+        else if(label.toLowerCase() === "enhancement"){
+            labelClass = "border-green-400 text-green-600";
+        }
+
+        return `
+        <div class="${labelClass} border rounded-full whitespace-nowrap font-semibold px-3 py-1 capitalize">
+            <h4 class="text-xs">${label}</h4>
+        </div>
+        `
+    }).join("");
+}
+
+                   
+
+
+                // card modal
+const  getModal = async (id) => {
+    const detailsContainer = document.getElementById("detailsContainer");
+    // console.log(id);
+    const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`)
+    const data = await res.json();
+    const details = data.data;
+
+    detailsContainer.innerHTML = `
+    <div class="modal-box p-7">
+                <h2 class="font-bold mb-1 text-xl">${details.title}</h2>
+                <div class="mt-3 mb-6">
+                    <span class=" ${details.status==="open"? "bg-green-600" : "bg-purple-600"} text-white py-1 px-2 rounded-full text-xs capitalize">${details.status}</span> &bull; <span class="text-xs">Opened by ${details.author}</span> &bull; <span class="text-xs">${details.createdAt.split("T")[0]}</span>
+                </div>
+
+                <div class="labels my-3 flex justify-start items-center gap-1.5 mt-3 ">
+                
+                    ${labelItems(details.labels)}
+                
+                </div>
+                <p class="text-sm text-gray-600 my-6">${details.description}</p>
+
+                <div class="flex justify-between items-center bg-[#F8FAFC] p-4 rounded-lg">
+                    <div>
+                        <p class="text-gray-600 text-sm">Assignee:</p>
+                        <h2 class="font-semibold">${details.assignee ? details.assignee: "Not Assigned"}</h2>
+                    </div>
+
+                    <div>
+                        <h2 class="text-gray-600 text-sm">Priority:</h2>
+                        <h2 class="0  ${details.priority==="high"? "bg-red-600" : details.priority==="medium" ?"bg-orange-600" : "bg-purple-600"} text-white py-1 px-3 rounded-full text-xs uppercase">${details.priority}</h2>
+                    </div>
+                </div>
+
+                <div class="modal-action">
+                    <form method="dialog">
+                        <button class="btn btn btn-primary">Close</button>
+                    </form>
+                </div>
+            </div>
+    `;
+
+    document.getElementById('card-modal').showModal();
+    
+}
+
